@@ -1,39 +1,40 @@
 import { useState } from "react";
-import users from "../../navigation.json";
+import { loginUser } from "../../Services/authService";
 
-const Login = () => {
+const Login = ({ onLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    const user = users.find(
-      (u) => u.username === username && u.password === password
-    );
-
-    if (user) {
-      setMessage("Login successful");
-    } else {
-      setMessage("Invalid username or password");
+    if (!username || !password) {
+      setError("All fields are required");
+      return;
     }
+
+    const user = loginUser(username, password);
+
+    if (!user) {
+      setError("Invalid credentials");
+      return;
+    }
+
+    // temporary token
+    onLogin("jwt.fake.token");
   };
 
   return (
-    <div className="w-75 mx-auto mt-25 p-5 border border-gray-300 rounded-[5px] text-center">
-      <h2 className="text-lg font-semibold mb-4">Login</h2>
+    <div className="max-w-sm mx-auto mt-20 p-5 border rounded">
+      <h2 className="text-xl font-semibold mb-4">Login</h2>
 
-      <form
-        onSubmit={handleLogin}
-        className="flex flex-col gap-2"
-      >
+      <form onSubmit={handleLogin} className="flex flex-col gap-3">
         <input
-          type="text"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          className="p-2 border border-gray-300 rounded"
+          className="p-2 border rounded"
         />
 
         <input
@@ -41,18 +42,13 @@ const Login = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="p-2 border border-gray-300 rounded"
+          className="p-2 border rounded"
         />
 
-        <button
-          type="submit"
-          className="p-2 border border-gray-400 cursor-pointer rounded hover:bg-gray-100"
-        >
-          Login
-        </button>
+        <button className="p-2 border rounded">Login</button>
       </form>
 
-      {message && <p className="mt-3">{message}</p>}
+      {error && <p className="mt-3 text-red-500">{error}</p>}
     </div>
   );
 };
