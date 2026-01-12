@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-
 import Login from "./Components/Auth/Login";
 import ProtectedLayout from "./Components/Layout/ProtectedLayout";
 import Dashboard from "./Pages/Dashboard";
 import Customer from "./Pages/Customers";
+import SalesOrder from "./Pages/SalesOrder";
 import { getToken, setToken, removeToken } from "./Utils/auth";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [activePage, setActivePage] = useState("dashboard");
 
   useEffect(() => {
     if (getToken()) {
@@ -32,11 +32,33 @@ function App() {
 
   return (
     <ProtectedLayout onLogout={logout}>
-      <Routes>
-        <Route path="/" element={<Navigate to="/dashboard" />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/customers" element={<Customer />} />
-      </Routes>
+      {/* Simple navigation */}
+      <div className="mb-6 flex gap-4">
+        <button
+          className="border px-3 py-1 rounded"
+          onClick={() => setActivePage("dashboard")}
+        >
+          Dashboard
+        </button>
+
+        <button
+          className="border px-3 py-1 rounded"
+          onClick={() => setActivePage("customers")}
+        >
+          Customers
+        </button>
+
+        <button
+          className="border px-3 py-1 rounded"
+          onClick={() => setActivePage("salesOrders")}
+        >
+          Sales Orders
+        </button>
+      </div>
+
+      {activePage === "dashboard" && <Dashboard />}
+      {activePage === "customers" && <Customer />}
+      {activePage === "salesOrders" && <SalesOrder />}
     </ProtectedLayout>
   );
 }
