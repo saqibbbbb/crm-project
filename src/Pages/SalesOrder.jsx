@@ -19,8 +19,10 @@ const SalesOrder = () => {
   };
 
   return (
-    <div>
-      <h2>Sales Orders</h2>
+    <div className="flex flex-col gap-6">
+      <p className="text-sm text-zinc-500">
+        Track orders placed by your customers.
+      </p>
       <SalesOrderForm customers={customers} onAdd={handleAdd} />
       <SalesOrderList orders={orders} />
     </div>

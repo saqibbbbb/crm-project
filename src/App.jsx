@@ -31,31 +31,11 @@ function App() {
   }
 
   return (
-    <ProtectedLayout onLogout={logout}>
-      {/* Simple navigation */}
-      <div className="mb-6 flex gap-4">
-        <button
-          className="border px-3 py-1 rounded"
-          onClick={() => setActivePage("dashboard")}
-        >
-          Dashboard
-        </button>
-
-        <button
-          className="border px-3 py-1 rounded"
-          onClick={() => setActivePage("customers")}
-        >
-          Customers
-        </button>
-
-        <button
-          className="border px-3 py-1 rounded"
-          onClick={() => setActivePage("salesOrders")}
-        >
-          Sales Orders
-        </button>
-      </div>
-
+    <ProtectedLayout
+      onLogout={logout}
+      activePage={activePage}
+      setActivePage={setActivePage}
+    >
       {activePage === "dashboard" && <Dashboard />}
       {activePage === "customers" && <Customer />}
       {activePage === "salesOrders" && <SalesOrder />}

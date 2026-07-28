@@ -35,8 +35,10 @@ const Customer = () => {
   };
 
   return (
-    <div>
-      <h2 className="text-xl font-bold mb-4">Customers</h2>
+    <div className="flex flex-col gap-6">
+      <p className="text-sm text-zinc-500">
+        Manage your leads and customer accounts.
+      </p>
 
       <CustomerForm
         onAdd={handleAdd}
