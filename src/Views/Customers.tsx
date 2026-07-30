@@ -7,10 +7,11 @@ import {
   updateCustomer,
   deleteCustomer,
 } from "../Services/customerService";
+import type { Customer as CustomerType, CustomerFormData } from "../types";
 
 const Customer = () => {
-  const [customers, setCustomers] = useState([]);
-  const [editingCustomer, setEditingCustomer] = useState(null);
+  const [customers, setCustomers] = useState<CustomerType[]>([]);
+  const [editingCustomer, setEditingCustomer] = useState<CustomerType | null>(null);
 
   useEffect(() => {
     setCustomers(getCustomers());
@@ -18,18 +19,18 @@ const Customer = () => {
 
   const refresh = () => setCustomers(getCustomers());
 
-  const handleAdd = (customer) => {
+  const handleAdd = (customer: CustomerFormData) => {
     addCustomer(customer);
     refresh();
   };
 
-  const handleUpdate = (id, data) => {
+  const handleUpdate = (id: number, data: CustomerFormData) => {
     updateCustomer(id, data);
     setEditingCustomer(null);
     refresh();
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: number) => {
     deleteCustomer(id);
     refresh();
   };

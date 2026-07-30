@@ -2,16 +2,18 @@ import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
+import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['.next']),
   {
-    files: ['**/*.{js,jsx}'],
+    files: ['**/*.{ts,tsx}'],
     extends: [
       js.configs.recommended,
+      tseslint.configs.recommended,
       reactHooks.configs.flat.recommended,
-      reactRefresh.configs.vite,
+      reactRefresh.configs.recommended,
     ],
     languageOptions: {
       ecmaVersion: 2020,
@@ -22,8 +24,13 @@ export default defineConfig([
         sourceType: 'module',
       },
     },
+  },
+  {
+    // Next.js App Router files conventionally export non-component values
+    // (metadata, generateMetadata, etc.) alongside the default component.
+    files: ['src/app/**/*.{ts,tsx}'],
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      'react-refresh/only-export-components': 'off',
     },
   },
 ])

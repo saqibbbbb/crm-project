@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { loginUser } from "../../Services/authService";
 import ThemeToggle from "../Common/ThemeToggle";
 
-const Login = ({ onLogin }) => {
+interface LoginProps {
+  onLogin: (token: string) => void;
+}
+
+const Login = ({ onLogin }: LoginProps) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!username || !password) {
@@ -26,17 +30,14 @@ const Login = ({ onLogin }) => {
     onLogin("jwt.fake.token");
   };
 
-  const inputClass =
-    "w-full p-2.5 rounded-md bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-600 outline-none focus:border-zinc-500 transition-colors";
-
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 flex items-center justify-center px-4 relative">
+    <div className="min-h-screen flex items-center justify-center px-4 relative">
       <div className="absolute top-6 right-6">
         <ThemeToggle />
       </div>
 
-      <div className="w-full max-w-sm p-8 border border-zinc-200 dark:border-zinc-800 rounded-lg bg-zinc-100 dark:bg-zinc-900">
-        <div className="w-9 h-9 rounded-md bg-zinc-900 dark:bg-zinc-100 text-zinc-50 dark:text-zinc-900 flex items-center justify-center font-bold mb-5">
+      <div className="glass-strong w-full max-w-sm p-8 rounded-2xl">
+        <div className="w-9 h-9 rounded-md bg-gradient-to-br from-slate-700 to-slate-900 text-white shadow-[0_4px_12px_-2px_rgba(30,41,59,0.55)] flex items-center justify-center font-bold mb-5">
           C
         </div>
 
@@ -50,7 +51,7 @@ const Login = ({ onLogin }) => {
               placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className={inputClass}
+              className="glass-input rounded-xl p-2.5"
             />
           </label>
 
@@ -61,17 +62,17 @@ const Login = ({ onLogin }) => {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={inputClass}
+              className="glass-input rounded-xl p-2.5"
             />
           </label>
 
           {error && (
-            <p className="text-sm text-red-600 dark:text-red-400 bg-red-500/10 rounded-md px-3 py-2.5">
+            <p className="text-sm text-red-600 dark:text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl px-3 py-2.5">
               {error}
             </p>
           )}
 
-          <button className="mt-1 p-2.5 rounded-md bg-zinc-900 dark:bg-zinc-100 text-zinc-50 dark:text-zinc-900 text-sm font-medium hover:bg-zinc-800 dark:hover:bg-white transition-colors">
+          <button className="btn-primary mt-1 p-2.5 rounded-xl text-sm">
             Login
           </button>
         </form>

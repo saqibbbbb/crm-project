@@ -1,14 +1,17 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import Login from "./Components/Auth/Login";
 import ProtectedLayout from "./Components/Layout/ProtectedLayout";
-import Dashboard from "./Pages/Dashboard";
-import Customer from "./Pages/Customers";
-import SalesOrder from "./Pages/SalesOrder";
+import Dashboard from "./Views/Dashboard";
+import Customer from "./Views/Customers";
+import SalesOrder from "./Views/SalesOrder";
 import { getToken, setToken, removeToken } from "./Utils/auth";
+import type { ActivePage } from "./types";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [activePage, setActivePage] = useState("dashboard");
+  const [activePage, setActivePage] = useState<ActivePage>("dashboard");
 
   useEffect(() => {
     if (getToken()) {
@@ -16,7 +19,7 @@ function App() {
     }
   }, []);
 
-  const login = (token) => {
+  const login = (token: string) => {
     setToken(token);
     setIsAuthenticated(true);
   };

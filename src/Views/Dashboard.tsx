@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { getCustomers } from "../Services/customerService";
 import { getSalesOrders } from "../Services/salesOrderService";
 import { IconUsers, IconOrders, IconRupee } from "../Components/Common/Icons";
+import type { Customer, SalesOrder } from "../types";
 
 const Dashboard = () => {
-  const [customers, setCustomers] = useState([]);
-  const [orders, setOrders] = useState([]);
+  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [orders, setOrders] = useState<SalesOrder[]>([]);
 
   useEffect(() => {
     setCustomers(getCustomers());
@@ -21,18 +22,21 @@ const Dashboard = () => {
       value: customers.length,
       hint: `${activeCustomers} active`,
       Icon: IconUsers,
+      accent: "from-slate-500/15 to-slate-500/5 text-slate-600 dark:text-slate-400",
     },
     {
       label: "Sales Orders",
       value: orders.length,
       hint: "all time",
       Icon: IconOrders,
+      accent: "from-teal-500/15 to-teal-500/5 text-teal-600 dark:text-teal-400",
     },
     {
       label: "Total Revenue",
       value: `₹${totalRevenue.toLocaleString("en-IN")}`,
       hint: "from all orders",
       Icon: IconRupee,
+      accent: "from-amber-500/15 to-amber-500/5 text-amber-600 dark:text-amber-400",
     },
   ];
 
@@ -46,13 +50,15 @@ const Dashboard = () => {
         {stats.map((stat) => (
           <div
             key={stat.label}
-            className="p-5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900"
+            className="glass p-5 rounded-2xl"
           >
             <div className="flex items-center justify-between mb-4">
               <span className="text-xs font-medium uppercase tracking-wide text-zinc-500">
                 {stat.label}
               </span>
-              <stat.Icon className="w-4 h-4 text-zinc-500" />
+              <span className={`w-8 h-8 rounded-lg bg-gradient-to-br ${stat.accent} flex items-center justify-center`}>
+                <stat.Icon className="w-4 h-4" />
+              </span>
             </div>
             <div className="text-3xl font-semibold text-zinc-900 dark:text-zinc-100 leading-none">{stat.value}</div>
             <div className="text-xs text-zinc-500 mt-2">{stat.hint}</div>
@@ -60,22 +66,22 @@ const Dashboard = () => {
         ))}
       </div>
 
-      <div className="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900">
-        <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800">
+      <div className="glass rounded-2xl">
+        <div className="px-5 py-4 border-b border-white/50 dark:border-white/10">
           <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">Recent Customers</h3>
         </div>
 
         {customers.length === 0 ? (
           <p className="px-5 py-8 text-sm text-zinc-500 text-center">No customers yet.</p>
         ) : (
-          <ul className="divide-y divide-zinc-200 dark:divide-zinc-800">
+          <ul className="divide-y divide-white/40 dark:divide-white/10">
             {customers.slice(-5).reverse().map((c) => (
               <li
                 key={c.id}
-                className="px-5 py-3.5 flex items-center justify-between text-sm"
+                className="px-5 py-3.5 flex items-center justify-between text-sm hover:bg-white/30 dark:hover:bg-white/5 transition-colors"
               >
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-8 h-8 rounded-full bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 flex items-center justify-center text-xs font-medium shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-slate-500/20 to-slate-700/20 border border-white/50 dark:border-white/10 text-slate-700 dark:text-slate-300 flex items-center justify-center text-xs font-medium shrink-0">
                     {c.name?.charAt(0).toUpperCase()}
                   </div>
                   <div className="min-w-0">

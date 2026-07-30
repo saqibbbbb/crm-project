@@ -1,10 +1,11 @@
 import initialCustomers from "../data/customers.json";
+import type { Customer, CustomerFormData } from "../types";
 
-let customers = [...initialCustomers];
+let customers: Customer[] = [...(initialCustomers as Customer[])];
 
 export const getCustomers = () => customers;
 
-export const addCustomer = (customer) => {
+export const addCustomer = (customer: CustomerFormData) => {
   customers = [
     ...customers,
     {
@@ -15,12 +16,12 @@ export const addCustomer = (customer) => {
   ];
 };
 
-export const updateCustomer = (id, updatedData) => {
+export const updateCustomer = (id: number, updatedData: Partial<CustomerFormData>) => {
   customers = customers.map((c) =>
     c.id === id ? { ...c, ...updatedData } : c
   );
 };
 
-export const deleteCustomer = (id) => {
+export const deleteCustomer = (id: number) => {
   customers = customers.filter((c) => c.id !== id);
 };

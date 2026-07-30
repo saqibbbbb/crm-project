@@ -3,17 +3,18 @@ import { getCustomers } from "../Services/customerService";
 import { getSalesOrders, addSalesOrder } from "../Services/salesOrderService";
 import SalesOrderForm from "../Components/SalesOrder/SalesOrderForm";
 import SalesOrderList from "../Components/SalesOrder/SalesOrderList";
+import type { Customer, SalesOrder as SalesOrderType, SalesOrderFormData } from "../types";
 
 const SalesOrder = () => {
-  const [customers, setCustomers] = useState([]);
-  const [orders, setOrders] = useState([]);
+  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [orders, setOrders] = useState<SalesOrderType[]>([]);
 
   useEffect(() => {
     setCustomers(getCustomers());
     setOrders(getSalesOrders());
   }, []);
 
-  const handleAdd = (order) => {
+  const handleAdd = (order: SalesOrderFormData) => {
     addSalesOrder(order);
     setOrders(getSalesOrders());
   };

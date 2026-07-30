@@ -1,7 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import type { Customer, CustomerFormData } from "../../types";
 
-const CustomerForm = ({ onAdd, onUpdate, editingCustomer }) => {
-  const [formData, setFormData] = useState({
+interface CustomerFormProps {
+  onAdd: (customer: CustomerFormData) => void;
+  onUpdate: (id: number, data: CustomerFormData) => void;
+  editingCustomer: Customer | null;
+}
+
+const CustomerForm = ({ onAdd, onUpdate, editingCustomer }: CustomerFormProps) => {
+  const [formData, setFormData] = useState<CustomerFormData>({
     name: "",
     email: "",
     phone: "",
@@ -15,14 +22,14 @@ const CustomerForm = ({ onAdd, onUpdate, editingCustomer }) => {
     }
   }, [editingCustomer]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!formData.name || !formData.email || !formData.phone || !formData.company) {
@@ -44,13 +51,12 @@ const CustomerForm = ({ onAdd, onUpdate, editingCustomer }) => {
     });
   };
 
-  const inputClass =
-    "w-full p-2.5 rounded-md bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-600 outline-none focus:border-zinc-500 transition-colors";
+  const inputClass = "glass-input rounded-xl p-2.5";
   const labelClass = "text-xs text-zinc-500 mb-1.5 block";
 
   return (
     <form
-      className="p-6 border border-zinc-200 dark:border-zinc-800 rounded-lg bg-zinc-100 dark:bg-zinc-900"
+      className="glass p-6 rounded-2xl"
       onSubmit={handleSubmit}
     >
       <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100 mb-5">
@@ -88,7 +94,7 @@ const CustomerForm = ({ onAdd, onUpdate, editingCustomer }) => {
         </label>
       </div>
 
-      <button className="mt-5 px-4 py-2.5 rounded-md bg-zinc-900 dark:bg-zinc-100 text-zinc-50 dark:text-zinc-900 text-sm font-medium hover:bg-zinc-800 dark:hover:bg-white transition-colors">
+      <button className="btn-primary mt-5 px-4 py-2.5 rounded-xl text-sm">
         {editingCustomer ? "Update Customer" : "Add Customer"}
       </button>
     </form>
