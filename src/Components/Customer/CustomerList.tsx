@@ -31,7 +31,7 @@ const CustomerList = ({ customers, onEdit, onDelete }: CustomerListProps) => {
   if (!customers.length)
     return (
       <div className="glass-subtle rounded-2xl py-12 text-center">
-        <p className="text-sm text-zinc-500">No customers found.</p>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400">No customers found.</p>
         <p className="text-xs text-zinc-400 dark:text-zinc-600 mt-1.5">Add your first customer using the form above.</p>
       </div>
     );
@@ -40,7 +40,7 @@ const CustomerList = ({ customers, onEdit, onDelete }: CustomerListProps) => {
     <div className="glass rounded-2xl overflow-hidden overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-white/50 dark:border-white/10 bg-white/25 dark:bg-white/[3%] text-left text-zinc-500">
+          <tr className="border-b border-white/50 dark:border-white/10 bg-white/25 dark:bg-white/[3%] text-left text-zinc-500 dark:text-zinc-400">
             <th className="px-5 py-3 font-medium text-xs uppercase tracking-wide">Name</th>
             <th className="px-5 py-3 font-medium text-xs uppercase tracking-wide">Company</th>
             <th className="px-5 py-3 font-medium text-xs uppercase tracking-wide">Email</th>

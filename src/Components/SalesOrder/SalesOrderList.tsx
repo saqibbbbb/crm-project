@@ -14,7 +14,7 @@ const SalesOrderList = ({ orders, onEdit, onDelete }: SalesOrderListProps) => {
   if (!orders.length)
     return (
       <div className="glass-subtle rounded-2xl py-12 text-center">
-        <p className="text-sm text-zinc-500">No sales orders yet.</p>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400">No sales orders yet.</p>
         <p className="text-xs text-zinc-400 dark:text-zinc-600 mt-1.5">Create one using the form above.</p>
       </div>
     );
@@ -29,9 +29,9 @@ const SalesOrderList = ({ orders, onEdit, onDelete }: SalesOrderListProps) => {
           <div className="min-w-0">
             <p className="truncate">
               <span className="text-zinc-900 dark:text-zinc-100 font-medium">{o.orderNumber}</span>
-              <span className="text-zinc-500"> · {o.productName}</span>
+              <span className="text-zinc-500 dark:text-zinc-400"> · {o.productName}</span>
             </p>
-            <p className="text-xs text-zinc-500 mt-1">Qty {o.quantity}</p>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Qty {o.quantity}</p>
           </div>
           <div className="flex items-center gap-3 shrink-0">
             <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs capitalize bg-teal-500/10 border border-teal-500/20 text-teal-700 dark:text-teal-400">

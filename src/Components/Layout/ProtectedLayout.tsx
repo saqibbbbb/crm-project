@@ -102,7 +102,7 @@ const ProtectedLayout = ({ onLogout, activePage, setActivePage, children }: Prot
           <h1 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">{currentLabel}</h1>
           <div className="flex items-center gap-4">
             {user && (
-              <span className="text-xs text-zinc-500">
+              <span className="text-xs text-zinc-500 dark:text-zinc-400">
                 {user.username} <span className="capitalize">({user.role.replace("_", " ")})</span>
               </span>
             )}

@@ -45,7 +45,7 @@ const Dashboard = () => {
   }
 
   if (!stats) {
-    return <div className="glass-subtle rounded-2xl py-12 text-center text-sm text-zinc-500">Loading...</div>;
+    return <div className="glass-subtle rounded-2xl py-12 text-center text-sm text-zinc-500 dark:text-zinc-400">Loading...</div>;
   }
 
   const activeCustomers = stats.customersByStatus.find((s) => s.status === "active")?.count ?? 0;
@@ -76,7 +76,7 @@ const Dashboard = () => {
 
   return (
     <div className="flex flex-col gap-8">
-      <p className="text-sm text-zinc-500">
+      <p className="text-sm text-zinc-500 dark:text-zinc-400">
         Welcome back — here's a quick look at your CRM.
       </p>
 
@@ -84,7 +84,7 @@ const Dashboard = () => {
         {cards.map((stat) => (
           <div key={stat.label} className="glass p-5 rounded-2xl">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs font-medium uppercase tracking-wide text-zinc-500">
+              <span className="text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
                 {stat.label}
               </span>
               <span className={`w-8 h-8 rounded-lg bg-gradient-to-br ${stat.accent} flex items-center justify-center`}>
@@ -92,7 +92,7 @@ const Dashboard = () => {
               </span>
             </div>
             <div className="text-3xl font-semibold text-zinc-900 dark:text-zinc-100 leading-none">{stat.value}</div>
-            <div className="text-xs text-zinc-500 mt-2">{stat.hint}</div>
+            <div className="text-xs text-zinc-500 dark:text-zinc-400 mt-2">{stat.hint}</div>
           </div>
         ))}
       </div>

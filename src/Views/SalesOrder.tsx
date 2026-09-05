@@ -82,7 +82,7 @@ const SalesOrder = () => {
 
   return (
     <div className="flex flex-col gap-6">
-      <p className="text-sm text-zinc-500">
+      <p className="text-sm text-zinc-500 dark:text-zinc-400">
         Track orders placed by your customers.
       </p>
       <SalesOrderForm
@@ -110,7 +110,7 @@ const SalesOrder = () => {
       )}
 
       {loading ? (
-        <div className="glass-subtle rounded-2xl py-12 text-center text-sm text-zinc-500">Loading...</div>
+        <div className="glass-subtle rounded-2xl py-12 text-center text-sm text-zinc-500 dark:text-zinc-400">Loading...</div>
       ) : (
         <>
           <SalesOrderList orders={orders} onEdit={setEditingOrder} onDelete={handleDelete} />

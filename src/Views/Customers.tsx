@@ -74,7 +74,7 @@ const Customer = () => {
 
   return (
     <div className="flex flex-col gap-6">
-      <p className="text-sm text-zinc-500">
+      <p className="text-sm text-zinc-500 dark:text-zinc-400">
         Manage your leads and customer accounts.
       </p>
 
@@ -101,7 +101,7 @@ const Customer = () => {
       )}
 
       {loading ? (
-        <div className="glass-subtle rounded-2xl py-12 text-center text-sm text-zinc-500">Loading...</div>
+        <div className="glass-subtle rounded-2xl py-12 text-center text-sm text-zinc-500 dark:text-zinc-400">Loading...</div>
       ) : (
         <>
           <CustomerList

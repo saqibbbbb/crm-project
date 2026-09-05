@@ -45,11 +45,11 @@ const Login = ({ onLogin }: LoginProps) => {
         </div>
 
         <h2 className="text-xl font-semibold mb-1.5 text-zinc-900 dark:text-zinc-100">Welcome back</h2>
-        <p className="text-sm text-zinc-500 mb-6">Sign in to your CRM account</p>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">Sign in to your CRM account</p>
 
         <form onSubmit={handleLogin} className="flex flex-col gap-4">
           <label>
-            <span className="text-xs text-zinc-500 mb-1.5 block">Username</span>
+            <span className="text-xs text-zinc-500 dark:text-zinc-400 mb-1.5 block">Username</span>
             <input
               placeholder="Username"
               value={username}
@@ -59,7 +59,7 @@ const Login = ({ onLogin }: LoginProps) => {
           </label>
 
           <label>
-            <span className="text-xs text-zinc-500 mb-1.5 block">Password</span>
+            <span className="text-xs text-zinc-500 dark:text-zinc-400 mb-1.5 block">Password</span>
             <input
               type="password"
               placeholder="Password"

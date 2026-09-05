@@ -44,7 +44,7 @@ const CustomerForm = ({ onAdd, onUpdate, editingCustomer }: CustomerFormProps) =
   };
 
   const inputClass = "glass-input rounded-xl p-2.5";
-  const labelClass = "text-xs text-zinc-500 mb-1.5 block";
+  const labelClass = "text-xs text-zinc-500 dark:text-zinc-400 mb-1.5 block";
 
   return (
     <form

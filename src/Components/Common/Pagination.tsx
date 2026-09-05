@@ -9,7 +9,7 @@ const Pagination = ({ page, totalPages, total, onPageChange }: PaginationProps) 
   if (totalPages <= 1) return null;
 
   return (
-    <div className="flex items-center justify-between px-1 text-sm text-zinc-500">
+    <div className="flex items-center justify-between px-1 text-sm text-zinc-500 dark:text-zinc-400">
       <span>
         Page {page} of {totalPages} · {total} total
       </span>
