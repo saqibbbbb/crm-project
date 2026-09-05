@@ -1,8 +1,31 @@
-import users from "../navigation.json";
-import type { NavUser } from "../types";
+import type { AuthUser } from "../types";
 
-export const loginUser = (username: string, password: string): NavUser | undefined => {
-  return users.find(
-    (u) => u.username === username.trim() && u.password === password
-  );
+async function parseJson(response: Response) {
+  return response.json().catch(() => ({}));
+}
+
+export const loginUser = async (username: string, password: string): Promise<AuthUser> => {
+  const response = await fetch("/api/auth/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password }),
+  });
+
+  const body = await parseJson(response);
+  if (!response.ok) {
+    throw new Error(body.error ?? "Login failed");
+  }
+
+  return body.user as AuthUser;
+};
+
+export const logoutUser = async (): Promise<void> => {
+  await fetch("/api/auth/logout", { method: "POST" });
+};
+
+export const getCurrentUser = async (): Promise<AuthUser | null> => {
+  const response = await fetch("/api/auth/me");
+  if (!response.ok) return null;
+  const body = await parseJson(response);
+  return body.user ?? null;
 };

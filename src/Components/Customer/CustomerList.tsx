@@ -1,3 +1,4 @@
+import { useAuth } from "../../Context/AuthContext";
 import type { Customer, CustomerStatus } from "../../types";
 
 const statusStyles: Record<CustomerStatus, string> = {
@@ -20,10 +21,13 @@ const StatusBadge = ({ status }: { status: CustomerStatus }) => (
 interface CustomerListProps {
   customers: Customer[];
   onEdit: (customer: Customer) => void;
-  onDelete: (id: number) => void;
+  onDelete: (id: string) => void;
 }
 
 const CustomerList = ({ customers, onEdit, onDelete }: CustomerListProps) => {
+  const user = useAuth();
+  const canDelete = user?.role === "admin";
+
   if (!customers.length)
     return (
       <div className="glass-subtle rounded-2xl py-12 text-center">
@@ -72,12 +76,14 @@ const CustomerList = ({ customers, onEdit, onDelete }: CustomerListProps) => {
                   >
                     Edit
                   </button>
-                  <button
-                    onClick={() => onDelete(c.id)}
-                    className="btn-ghost px-2.5 py-1.5 rounded-lg text-xs text-red-600 dark:text-red-400"
-                  >
-                    Delete
-                  </button>
+                  {canDelete && (
+                    <button
+                      onClick={() => onDelete(c.id)}
+                      className="btn-ghost px-2.5 py-1.5 rounded-lg text-xs text-red-600 dark:text-red-400"
+                    >
+                      Delete
+                    </button>
+                  )}
                 </div>
               </td>
             </tr>

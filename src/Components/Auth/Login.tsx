@@ -1,33 +1,36 @@
 import { useState, type FormEvent } from "react";
 import { loginUser } from "../../Services/authService";
 import ThemeToggle from "../Common/ThemeToggle";
+import type { AuthUser } from "../../types";
 
 interface LoginProps {
-  onLogin: (token: string) => void;
+  onLogin: (user: AuthUser) => void;
 }
 
 const Login = ({ onLogin }: LoginProps) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e: FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError("");
 
     if (!username || !password) {
       setError("All fields are required");
       return;
     }
 
-    const user = loginUser(username, password);
-
-    if (!user) {
-      setError("Invalid credentials");
-      return;
+    setLoading(true);
+    try {
+      const user = await loginUser(username, password);
+      onLogin(user);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Invalid credentials");
+    } finally {
+      setLoading(false);
     }
-
-    // temporary token
-    onLogin("jwt.fake.token");
   };
 
   return (
@@ -72,8 +75,8 @@ const Login = ({ onLogin }: LoginProps) => {
             </p>
           )}
 
-          <button className="btn-primary mt-1 p-2.5 rounded-xl text-sm">
-            Login
+          <button disabled={loading} className="btn-primary mt-1 p-2.5 rounded-xl text-sm disabled:opacity-60">
+            {loading ? "Signing in..." : "Login"}
           </button>
         </form>
       </div>

@@ -1,7 +1,7 @@
 export type CustomerStatus = "lead" | "active" | "inactive";
 
 export interface Customer {
-  id: number;
+  id: string;
   name: string;
   email: string;
   phone: string;
@@ -12,12 +12,18 @@ export interface Customer {
 
 export type CustomerFormData = Omit<Customer, "id" | "createdAt">;
 
+export interface CustomerOption {
+  id: string;
+  name: string;
+  company: string;
+}
+
 export type SalesOrderStatus = "created" | "processing" | "shipped" | "delivered" | "cancelled";
 
 export interface SalesOrder {
-  id: number;
+  id: string;
   orderNumber: string;
-  customerId: number;
+  customerId: string;
   productName: string;
   quantity: number;
   totalAmount: number;
@@ -26,16 +32,26 @@ export interface SalesOrder {
 }
 
 export interface SalesOrderFormData {
-  customerId: number | "";
+  customerId: string;
   productName: string;
   quantity: number;
   totalAmount: number | "";
   status: SalesOrderStatus;
 }
 
-export interface NavUser {
+export type UserRole = "admin" | "sales_rep";
+
+export interface AuthUser {
   username: string;
-  password: string;
+  role: UserRole;
+}
+
+export interface PaginatedResponse<T> {
+  data: T[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
 }
 
 export type ActivePage = "dashboard" | "customers" | "salesOrders";

@@ -1,26 +1,24 @@
-import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import type { Customer, CustomerFormData } from "../../types";
 
 interface CustomerFormProps {
   onAdd: (customer: CustomerFormData) => void;
-  onUpdate: (id: number, data: CustomerFormData) => void;
+  onUpdate: (id: string, data: CustomerFormData) => void;
   editingCustomer: Customer | null;
 }
 
-const CustomerForm = ({ onAdd, onUpdate, editingCustomer }: CustomerFormProps) => {
-  const [formData, setFormData] = useState<CustomerFormData>({
-    name: "",
-    email: "",
-    phone: "",
-    company: "",
-    status: "lead",
-  });
+const emptyForm: CustomerFormData = {
+  name: "",
+  email: "",
+  phone: "",
+  company: "",
+  status: "lead",
+};
 
-  useEffect(() => {
-    if (editingCustomer) {
-      setFormData(editingCustomer);
-    }
-  }, [editingCustomer]);
+/** Parent remounts this via `key={editingCustomer?.id ?? "new"}` so the
+ * lazy initializer below is all that's needed to load edit data — no effect. */
+const CustomerForm = ({ onAdd, onUpdate, editingCustomer }: CustomerFormProps) => {
+  const [formData, setFormData] = useState<CustomerFormData>(() => editingCustomer ?? emptyForm);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
@@ -42,13 +40,7 @@ const CustomerForm = ({ onAdd, onUpdate, editingCustomer }: CustomerFormProps) =
       onAdd(formData);
     }
 
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      company: "",
-      status: "lead",
-    });
+    setFormData(emptyForm);
   };
 
   const inputClass = "glass-input rounded-xl p-2.5";

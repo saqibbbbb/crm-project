@@ -1,10 +1,16 @@
+import { useAuth } from "../../Context/AuthContext";
 import type { SalesOrder } from "../../types";
 
 interface SalesOrderListProps {
   orders: SalesOrder[];
+  onEdit: (order: SalesOrder) => void;
+  onDelete: (id: string) => void;
 }
 
-const SalesOrderList = ({ orders }: SalesOrderListProps) => {
+const SalesOrderList = ({ orders, onEdit, onDelete }: SalesOrderListProps) => {
+  const user = useAuth();
+  const canDelete = user?.role === "admin";
+
   if (!orders.length)
     return (
       <div className="glass-subtle rounded-2xl py-12 text-center">
@@ -32,6 +38,22 @@ const SalesOrderList = ({ orders }: SalesOrderListProps) => {
               {o.status}
             </span>
             <span className="text-base text-zinc-900 dark:text-zinc-100 font-semibold">₹{o.totalAmount}</span>
+            <div className="flex gap-2">
+              <button
+                onClick={() => onEdit(o)}
+                className="btn-ghost px-2.5 py-1.5 rounded-lg text-xs text-zinc-600 dark:text-zinc-300"
+              >
+                Edit
+              </button>
+              {canDelete && (
+                <button
+                  onClick={() => onDelete(o.id)}
+                  className="btn-ghost px-2.5 py-1.5 rounded-lg text-xs text-red-600 dark:text-red-400"
+                >
+                  Delete
+                </button>
+              )}
+            </div>
           </div>
         </li>
       ))}

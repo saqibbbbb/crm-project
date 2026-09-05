@@ -6,6 +6,7 @@ import {
   IconLogout,
 } from "../Common/Icons";
 import ThemeToggle from "../Common/ThemeToggle";
+import { useAuth } from "../../Context/AuthContext";
 import type { ActivePage } from "../../types";
 
 const navItems: { key: ActivePage; label: string; Icon: typeof IconDashboard }[] = [
@@ -23,6 +24,7 @@ interface ProtectedLayoutProps {
 
 const ProtectedLayout = ({ onLogout, activePage, setActivePage, children }: ProtectedLayoutProps) => {
   const [collapsed, setCollapsed] = useState(true);
+  const user = useAuth();
 
   const currentLabel =
     navItems.find((item) => item.key === activePage)?.label ?? "Dashboard";
@@ -98,7 +100,14 @@ const ProtectedLayout = ({ onLogout, activePage, setActivePage, children }: Prot
       <div className="flex-1 min-w-0 flex flex-col gap-4">
         <header className="glass-subtle h-16 px-8 rounded-2xl flex items-center justify-between sticky top-4 z-10">
           <h1 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">{currentLabel}</h1>
-          <ThemeToggle />
+          <div className="flex items-center gap-4">
+            {user && (
+              <span className="text-xs text-zinc-500">
+                {user.username} <span className="capitalize">({user.role.replace("_", " ")})</span>
+              </span>
+            )}
+            <ThemeToggle />
+          </div>
         </header>
 
         <main className="w-full pb-4">{children}</main>
